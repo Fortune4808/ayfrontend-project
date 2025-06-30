@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+    --primary-color: #002B00  ;
+    --secondary-color: #031C13;
+}
+
+.side-links{
+    @apply pt-[12px] px-[10px] pb-[18px] border-b-[#DBEBBE] border-b-[1px] text-[13px] cursor-pointer;
+}
+
+.li-in{
+  @apply p-[10px] text-[13px] cursor-pointer hover:bg-secondary-color;
+}
+
+table {
+  @apply w-full border-collapse rounded-t-[5px] overflow-hidden shadow-xl table-auto;
+}
+
+table thead tr {
+  @apply bg-primary-color text-white text-left font-bold;
+}
+
+table thead th {
+  @apply py-3 px-4 text-[11px];
+}
+
+table tbody td {
+  @apply py-3 px-4 text-[10px] text-[#333] leading-tight;
+}
+
+table tbody td:first-child {
+  @apply w-[100px] whitespace-nowrap;
+}
+
+table tbody tr {
+  @apply border-b border-solid border-[#dddddd];
+}
+
+table tbody tr:nth-child(even) {
+  @apply bg-[#f3f3f3];
+}
+
+
