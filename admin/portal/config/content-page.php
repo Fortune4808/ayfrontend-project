@@ -89,6 +89,28 @@
    </div>
 <?php }?>
 
+<?php if($page=='allLocation'){?>
+   <div class="w-[100%] h-[55px] rounded-md font-body">
+        <div class="w-[95%] h-[55px] m-auto flex justify-between items-center content-center gap-[5px] text-[10px] text-[#ABABAB]">
+            <select class="w-[20%] h-[45px] bg-white pl-[20px] rounded-[5px] focus:border-black border-solid border focus:border-opacity-30 flex flex-grow" id="status_id" onchange="_all_student(1, this.value, faculty_id, department_id, level_id);">
+                <option value="">All Status</option>
+                <script>getStatus();</script>
+            </select>
+            <input class="w-[30%] h-[45px] bg-white pl-[20px] rounded-[5px] outline-none focus:border-black border-solid border focus:border-opacity-30 flex flex-grow" type="text" id="search" onkeyup="_all_student(1, '');" placeholder="Type here to search..." title="Type here to search"/>
+        </div>
+
+        <div class="w-[100%] h-[40px] bg-[#ECF5F0] border-solid border border-[#A0E5BD] flex justify-center">
+            <div class="w-[98%] flex items-center justify-between text-[#424141]">
+                <div><i class="bi-geo-alt"></i>  ALL LOCATION'S LIST</div>
+                <button class="text-sm py-[5px] px-[10px] bg-[#0E4000]" title="Add new staff"  onClick="getForm('locationReg');">ADD NEW LOCATION <i class="bi-person-plus"></i></button>
+            </div>
+        </div>
+
+        <div class="w-[98%] m-auto mt-[10px]" id="fetchAllLocation">
+            <script>allLocation();</script>
+        </div>
+   </div>  
+<?php }?>
 
 <?php if($page=='allCustomer'){?>
    <div class="w-[100%] h-[55px] rounded-md font-body">

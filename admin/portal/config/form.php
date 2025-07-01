@@ -338,6 +338,58 @@
     </div>
 <?php }?>
 
+<?php if ($page=='locationReg'){?>
+    <div class="absolute h-screen w-[500px] bg-white right-0 animated fadeInRight">
+        <div class="formHeader">
+            <p class="text-white text-[13px] font-semibold font-title"><i class="bi-person-plus"></i> New Location Registration Form </p>
+            <div class="bg-white bg-opacity-80 px-[8px] py-[3px] rounded-[100%] text-[#f00] text-[18px] cursor-pointer" title="close" onclick="alertClose()"><i class="bi-x"></i></div>
+        </div>
+
+        <div class="w-[100%] h-[calc(100%-50px)] absolute overflow-auto">
+
+            <div class="w-[90%] m-auto">
+                <div class="mt-[15px] p-[10px] bg-[#FAF3F0] border border-solid border-[#F2BDA2] font-title">
+                    <p class="text-[#424141]">Kindly fill the form below to <span class="text-[#83C2E7] font-bold">Add New Location</span></p>
+                </div>
+
+                <div class="my-[20px] text-[12px] flex flex-col gap-[5px]">
+                    <div class="w-[100%]">
+                        <label class="px-[10px] text-primary-color"> LOCATION NAME:</label><br/>
+                        <input class="formInput" type="text" id="locationName" placeholder="ENTER LOCATION NAME"/>
+                    </div>
+
+                    <button class="w-[40%]" title="submit" id="submitBtn" onclick="newLocation();"><i class="bi-check2"></i> SUBMIT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php }?>
+
+<?php if ($page=='locationProfile'){?>
+    <div class="absolute h-screen w-[500px] bg-white right-0 animated fadeInRight">
+        <div class="formHeader">
+            <p class="text-white text-[13px] font-semibold font-title"><i class="bi-person-plus"></i> Update Location Form </p>
+            <div class="bg-white bg-opacity-80 px-[8px] py-[3px] rounded-[100%] text-[#f00] text-[18px] cursor-pointer" title="close" onclick="alertClose()"><i class="bi-x"></i></div>
+        </div>
+
+        <div class="w-[100%] h-[calc(100%-50px)] absolute overflow-auto">
+
+            <div class="w-[90%] m-auto">
+
+                <div class="my-[20px] text-[12px] flex flex-col gap-[5px]">
+                    <div class="w-[100%]">
+                        <label class="px-[10px] text-primary-color"> LOCATION NAME:</label><br/>
+                        <input class="formInput" type="text" id="locationName" placeholder="ENTER LOCATION NAME"/>
+                    </div>
+
+                    <button class="w-[40%]" title="submit" id="submitBtn" onclick="updateLocation('<?php echo $ids ?>');"><i class="bi-check2"></i> SUBMIT</button>
+                </div>
+            </div>
+        </div>
+        <script>locationProfile('<?php echo $ids ?>');</script>
+    </div>
+<?php }?>
+
 <?php if($page=='studentProfileModule'){?>
     <div class="absolute h-screen w-[90%] right-[5%] top-[55px] bg-white animated fadeInUp">
         <div class="formHeader">

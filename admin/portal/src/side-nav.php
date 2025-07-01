@@ -8,7 +8,7 @@
 
             <li class="side-links" onclick="expandLink('slot');" title="Location/Slot Page" id="LocationDepartmentId"><i class="bi-geo-alt text-[#3a4669] mr-[6px]"></i> Location/Slot Page<i class="bi bi-chevron-down float-right mr-[15px]"></i>
                 <div class="w-[100%] bg-[#f4f6fa]" id="slot-li" style="display:none">   
-                    <div class="li-in" onclick="getPage('location-module');"> - View Location</div>
+                    <div class="li-in" onclick="getPage('allLocation');"> - View Location</div>
                     <div class="li-in" onclick="getPage('slot-module');"> - View Slot</div>
                 </div>
             </li>

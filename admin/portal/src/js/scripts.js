@@ -394,7 +394,7 @@ function allCustomers(){
 }
 
 function getCustomerProfile(customerId){
-axios.get(`${endPoint}/admin/user/${customerId}`, { headers })
+    axios.get(`${endPoint}/admin/user/${customerId}`, { headers })
     .then(response => {
         const {data: customerData } = response.data;
 
@@ -420,6 +420,184 @@ axios.get(`${endPoint}/admin/user/${customerId}`, { headers })
         console.error('Error fetching customer:', error);
         container.html('<p>There was an error fetching the customer. Please try again later.</p>');
     });
+}
+
+function deleteLocation(locationId){
+    axios.delete(`${endPoint}/admin/location/${locationId}`, { headers })
+    .then(response => {
+        const {success, message } = response.data;
+        if (success){
+            showAlert('#success-div', 'SUCCESS', message);
+            allLocation();
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting location:', error);
+        container.html('<p>There was an error deleting the location. Please try again later.</p>');
+    });
+}
+
+function allLocation(){
+    const container = $('#fetchAllLocation');
+    container.html(`<div class="ajax-loader"><br><img src="src/all-images/image-pix/ajax-loader.gif"/></div>`).fadeIn(500);
+
+    axios.get(`${endPoint}/admin/location`, { headers })
+    .then(response => {
+        const {success, message, data: fetch, pagination } = response.data;  
+        if (success) {
+            if (fetch.length > 0) {
+                const tableRows = fetch.map((item, index) => {
+                    const id = item.id;
+                    const locationName = `${item.locationName.toUpperCase()}`;
+                    const createdBy = item.createdBy;
+                    const createdAt = item.created_at;
+
+                    return `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${locationName}</td>
+                            <td>${createdBy}</td>
+                            <td>${createdAt}</td>
+                            <td>
+                                <i onclick="getFormWithId('locationProfile','${id}')" class="bi bi-pencil-square text-[15px] text-white p-[8px] bg-primary-color cursor-pointer hover:bg-[#444444]" title="VIEW LOCATION"></i>
+                                <i onclick="deleteLocation(${id});" class="bi bi-trash-fill text-[15px] text-white p-[8px] bg-primary-color cursor-pointer hover:bg-[#2b0e0e]" title="DELETE LOCATION"></i>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                const table = `
+                    <table>
+                        <thead><tr><th>SN</th><th>LOCATION NAME</th><th>CREATED BY</th><th>DATE</th><th>ACTION</th></tr></thead>
+                        <tbody class="bg-white">${tableRows}</tbody>
+                    </table>
+                    <div class="my-[10px] flex justify-between">
+                        <div class="text-[#3a4669]">
+                            Showing ${pagination.from} to ${pagination.to} of ${pagination.perPage} entries
+                        </div>
+
+                        <div class="flex gap-1 mb-4">
+                            <button class="text-sm py-[8px] px-[15px]" ${pagination.prevPageUrl ? `onclick="(${pagination.prevPageUrl})"` : 'disabled'}>PREVIOUS</button>
+                            <button class="text-sm py-[8px] px-[15px]" ${pagination.nextPageUrl ? `onclick="(${pagination.nextPageUrl})"` : 'disabled'}>NEXT</button>
+                        </div>
+                    </div>
+                `;
+                container.html(table);
+            }
+        } else {
+            container.html(`
+                <table>
+                    <thead><tr><th>SN</th><th>LOCATION NAME</th><th>CREATED BY</th><th>DATE</th><th>ACTION</th></tr></thead>
+                    <tbody class="bg-white"></tbody>
+                </table>
+                ${noRecordFound(message)}
+            `);
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching locations:', error);
+        container.html('<p>There was an error fetching the locations. Please try again later.</p>');
+    });
+}
+
+function locationProfile(locationId){
+    axios.get(`${endPoint}/admin/location/${locationId}`, { headers })
+    .then(response => {
+        const {data: locationData } = response.data;
+        $('#locationName').val(locationData.locationName);
+    })
+    .catch(error => {
+        console.error('Error fetching location:', error);
+        container.html('<p>There was an error fetching the location. Please try again later.</p>');
+    });
+}
+
+function updateLocation(locationId){
+    const locationName = $('#locationName').val();
+
+    if (locationName==''){
+        showAlert('#warning-div', 'LOCATION NAME ERROR', 'All Fields are Required');
+    }else{
+
+        const btnText  = $('#submitBtn').html();
+	    $('#submitBtn').html('<i id="spinner" class="bi bi-arrow-repeat"></i> UPDATING...');
+	    document.getElementById('submitBtn').disabled = true;
+
+        const formData = new FormData();
+        formData.append('locationName', locationName);
+
+        axios.put(`${endPoint}/admin/location/${locationId}`, formData, { headers })
+        .then(response =>{
+
+            const {success, message} = response.data;
+
+            if (success){
+                showAlert('#success-div', 'SUCCESS', message);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+                allLocation(); alertClose();
+            }else{
+                showAlert('#warning-div', 'ERROR', message);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+            }
+        })
+        .catch(error => {
+            if (error.response) {
+                showAlert('#warning-div', 'ERROR', error.response.data.message);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+            }else{
+                showAlert('#warning-div', 'ERROR', error);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+    }
+}
+
+function newLocation(){
+    const locationName = $('#locationName').val();
+
+    if (locationName==''){
+        showAlert('#warning-div', 'LOCATION NAME ERROR', 'All Fields are Required');
+    }else{
+
+        const btnText  = $('#submitBtn').html();
+	    $('#submitBtn').html('<i id="spinner" class="bi bi-arrow-repeat"></i> SUBMITTING...');
+	    document.getElementById('submitBtn').disabled = true;
+
+        const formData = new FormData();
+        formData.append('locationName', locationName);
+
+        axios.post(`${endPoint}/admin/location`, formData, { headers })
+        .then(response =>{
+
+            const {success, message} = response.data;
+
+            if (success){
+                showAlert('#success-div', 'SUCCESS', message);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+                allLocation(); alertClose();
+            }else{
+                showAlert('#warning-div', 'ERROR', message);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+            }
+        })
+        .catch(error => {
+            if (error.response) {
+                showAlert('#warning-div', 'ERROR', error.response.data.message);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+            }else{
+                showAlert('#warning-div', 'ERROR', error);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+    }
 }
 
 
