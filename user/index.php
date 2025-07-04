@@ -3,7 +3,7 @@
 <html>
 <head>
   <?php include 'src/meta.php';?>
-  <title>Login - <?php echo $website_name;?></title>
+  <title>Login - <?php echo $websiteName;?></title>
 </head>
 <body>
   <main>
@@ -22,7 +22,7 @@
         <div class="w-[75%] m-[auto] mt-[40px]">
           <div class="flex justify-between items-center">
             <div class="w-[150px]">
-              <a href=""><img src="./all-images/image-pix/logo.png" alt="<?php echo $website_name;?> Logo" title="<?php echo $website_name;?> Logo"/></a>
+              <a href=""><img src="./all-images/image-pix/logo.png" alt="<?php echo $websiteName;?> Logo" title="<?php echo $websiteName;?> Logo"/></a>
             </div>
 
             <div class="flex">
@@ -33,8 +33,8 @@
           
           <nav>
             <ul class="mt-[20px] flex gap-[10px]">
-              <li class="py-[12px] px-[15px] rounded cursor-pointer bg-[#D5DBDB]" onclick="_next_page('next_1')">LOG-IN</li>
-              <li class="py-[12px] px-[15px] rounded cursor-pointer active" onclick="_next_page('next_3')">SIGN-UP</li>
+              <li class="py-[12px] px-[15px] rounded cursor-pointer bg-[#D5DBDB]" onclick="nextPage('next1')">LOG-IN</li>
+              <li class="py-[12px] px-[15px] rounded cursor-pointer active" onclick="nextPage('next3')">SIGN-UP</li>
             </ul>
           </nav>
           <hr class="mt-[5px] border-[1px]"/>
@@ -54,7 +54,7 @@
 
   <script>
 		superplaceholder({
-			el: email,
+			el: emailAddress,
 				sentences: [ 'Enter Email Address', 'e.g gethostel@gmail.com', 'info@gethostel.com', 'king123@hotmail.com', 'gethostel@yahoo.com' ],
 				options: {
 				letterDelay: 80,

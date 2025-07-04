@@ -8,7 +8,7 @@
     <meta name="distribution" content="global">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include 'links.php'; ?>
-    <title><?php echo $website_name; ?> Student Portal</title>
+    <title><?php echo $websiteName; ?> User Portal</title>
 </head>
 
 <body>
@@ -20,8 +20,7 @@
 			    <?php include 'config/content-page.php';?>
             </div>
         </div>
-        <!-- <script>getLoginProfile();</script>
-        <script>sessionValidation();</script> -->
+        <script>getUser();</script>
     </div>
 
 </body>

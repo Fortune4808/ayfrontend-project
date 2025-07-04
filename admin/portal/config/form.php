@@ -390,6 +390,87 @@
     </div>
 <?php }?>
 
+<?php if ($page=='slotProfile'){?>
+    <div class="absolute h-screen w-[500px] bg-white right-0 animated fadeInRight">
+        <div class="formHeader">
+            <p class="text-white text-[13px] font-semibold font-title"><i class="bi-person-plus"></i> Update Slot Form </p>
+            <div class="bg-white bg-opacity-80 px-[8px] py-[3px] rounded-[100%] text-[#f00] text-[18px] cursor-pointer" title="close" onclick="alertClose()"><i class="bi-x"></i></div>
+        </div>
+
+        <div class="w-[100%] h-[calc(100%-50px)] absolute overflow-auto">
+
+            <div class="w-[90%] m-auto">
+
+                <div class="my-[20px] text-[12px] flex flex-col gap-[5px]">
+                    <div class="w-[100%]">
+                        <label class="px-[10px] text-primary-color"> SLOT NAME:</label><br/>
+                        <input class="formInput" type="text" id="slotName" placeholder="ENTER SLOT NAME"/>
+                    </div>
+
+                    <div class="w-[100%]">
+                        <label class="px-[10px] text-primary-color"> LOCATION:</label><br/>
+                        <select class="formInput" id="locationId">
+                            <script>getLocation();</script>
+                        </select>
+                    </div>
+
+                    <div class="w-[100%]">
+                        <label class="px-[10px] text-primary-color"> STATUS:</label><br/>
+                        <select class="formInput" id="statusId">
+                            <script>getStatus();</script>
+                        </select>
+                    </div>
+
+                    <button class="w-[40%]" title="submit" id="submitBtn" onclick="updateLocation('<?php echo $ids ?>');"><i class="bi-check2"></i> SUBMIT</button>
+                </div>
+            </div>
+        </div>
+        <script>getSlot('<?php echo $ids ?>');</script>
+    </div>
+<?php }?>
+
+<?php if ($page=='newSlot'){?>
+    <div class="absolute h-screen w-[500px] bg-white right-0 animated fadeInRight">
+        <div class="formHeader">
+            <p class="text-white text-[13px] font-semibold font-title"><i class="bi-person-plus"></i> Update slot Form </p>
+            <div class="bg-white bg-opacity-80 px-[8px] py-[3px] rounded-[100%] text-[#f00] text-[18px] cursor-pointer" title="close" onclick="alertClose()"><i class="bi-x"></i></div>
+        </div>
+
+        <div class="w-[100%] h-[calc(100%-50px)] absolute overflow-auto">
+
+            <div class="w-[90%] m-auto">
+
+                <div class="mt-[15px] p-[10px] bg-[#FAF3F0] border border-solid border-[#F2BDA2] font-title">
+                    <p class="text-[#424141]">Kindly fill the form below to <span class="text-[#83C2E7] font-bold">Add New Slot</span></p>
+                </div>
+
+                <div class="my-[20px] text-[12px] flex flex-col gap-[5px]">
+                    <div class="w-[100%]">
+                        <label class="px-[10px] text-primary-color"> LOCATION:</label><br/>
+                        <select class="formInput" id="locationId">
+                            <script>getLocation();</script>
+                        </select>
+                    </div>
+
+                    <div class="w-[100%]">
+                        <label class="px-[10px] text-primary-color"> SLOT NAME:</label><br/>
+                        <input class="formInput" type="text" id="slotName" placeholder="ENTER SLOT NAME"/>
+                    </div>
+
+                    <div class="w-[100%]">
+                        <label class="px-[10px] text-primary-color"> STATUS:</label><br/>
+                        <select class="formInput" id="statusId">
+                            <script>getStatus();</script>
+                        </select>
+                    </div>
+
+                    <button class="w-[40%]" title="submit" id="submitBtn" onclick="newSlot();"><i class="bi-check2"></i> SUBMIT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php }?>
+
 <?php if($page=='studentProfileModule'){?>
     <div class="absolute h-screen w-[90%] right-[5%] top-[55px] bg-white animated fadeInUp">
         <div class="formHeader">

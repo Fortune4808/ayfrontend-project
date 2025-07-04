@@ -2,7 +2,7 @@
     <div class="w-[98%] flex gap-2 mt-3 flex-wrap content-start">
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="total_staff"></div>
+                <div class="text-2xl counter" id="">0</div>
                 <div class="text-sm">TOTAL ADMIN/STAFF</div>
                 <i class="bi-people-fill text-3xl"></i>
             </div>
@@ -10,56 +10,40 @@
 
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="total_student"></div>
-                <div class="text-sm">TOTAL STUDENT</div>
+                <div class="text-2xl counter" id=""></div>
+                <div class="text-sm">TOTAL CUSTOMERS</div>
                 <i class="bi-people-fill text-3xl"></i>
             </div>
         </div>
 
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="nd1_total_student"></div>
-                <div class="text-sm">TOTAL NDI STUDENT</div>
-                <i class="bi-people-fill text-3xl"></i>
+                <div class="text-2xl counter" id=""></div>
+                <div class="text-sm">TOTAL LOCATION</div>
+                <i class="bi-geo-alt-fill text-3xl"></i>
             </div>
         </div>
 
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="nd2_total_student"></div>
-                <div class="text-sm">TOTAL NDII STUDENT</div>
-                <i class="bi-people-fill text-3xl"></i>
+                <div class="text-2xl counter" id=""></div>
+                <div class="text-sm">TOTAL PARKING SLOT</div>
+                <i class="bi-p-square-fill text-3xl"></i>
             </div>
         </div>
 
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="hnd1_total_student"></div>
-                <div class="text-sm">TOTAL HNDI STUDENT</div>
-                <i class="bi-people-fill text-3xl"></i>
+                <div class="text-2xl counter" id=""></div>
+                <div class="text-sm">TOTAL BOOKING</div>
+                <i class="bi-journal-richtext text-3xl"></i>
             </div>
         </div>
 				
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="hnd2_total_student"></div>
-                <div class="text-sm">TOTAL HNDII STUDENT</div>
-                <i class="bi-people-fill text-3xl"></i>
-            </div>
-        </div>
-
-        <div class="count-div">
-            <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl">NGN <span class="counter" id="total_balance"></span></div>
-                <div class="text-sm">TOTAL BALANCE</div>
-                <i class="bi-wallet-fill text-3xl"></i>
-            </div>
-        </div>
-
-        <div class="count-div">
-            <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl">NGN <span class="counter" id="total_spent"></span></div>
-                <div class="text-sm">TOTAL AMOUNT SPENT</div>
+                <div class="text-2xl counter" id=""></div>
+                <div class="text-sm">TOTAL REVENUE</div>
                 <i class="bi-wallet-fill text-3xl"></i>
             </div>
         </div>
@@ -108,6 +92,29 @@
 
         <div class="w-[98%] m-auto mt-[10px]" id="fetchAllLocation">
             <script>allLocation();</script>
+        </div>
+   </div>  
+<?php }?>
+
+<?php if($page=='allSlot'){?>
+   <div class="w-[100%] h-[55px] rounded-md font-body">
+        <div class="w-[95%] h-[55px] m-auto flex justify-between items-center content-center gap-[5px] text-[10px] text-[#ABABAB]">
+            <select class="w-[20%] h-[45px] bg-white pl-[20px] rounded-[5px] focus:border-black border-solid border focus:border-opacity-30 flex flex-grow" id="status_id" onchange="_all_student(1, this.value, faculty_id, department_id, level_id);">
+                <option value="">All Status</option>
+                <script>getStatus();</script>
+            </select>
+            <input class="w-[30%] h-[45px] bg-white pl-[20px] rounded-[5px] outline-none focus:border-black border-solid border focus:border-opacity-30 flex flex-grow" type="text" id="search" onkeyup="_all_student(1, '');" placeholder="Type here to search..." title="Type here to search"/>
+        </div>
+
+        <div class="w-[100%] h-[40px] bg-[#ECF5F0] border-solid border border-[#A0E5BD] flex justify-center">
+            <div class="w-[98%] flex items-center justify-between text-[#424141]">
+                <div><i class="bi-geo-alt"></i>  ALL SLOT'S LIST</div>
+                <button class="text-sm py-[5px] px-[10px] bg-[#0E4000]" title="Add new staff"  onClick="getForm('newSlot');">ADD NEW SLOT <i class="bi-person-plus"></i></button>
+            </div>
+        </div>
+
+        <div class="w-[98%] m-auto mt-[10px]" id="fetchAllSlot">
+            <script>allSlot();</script>
         </div>
    </div>  
 <?php }?>

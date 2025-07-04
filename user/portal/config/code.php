@@ -2,17 +2,17 @@
 	$action=$_POST['action'];
 	switch ($action){
 
-	case 'get_page':
+	case 'getPage':
 		$page=$_POST['page'];
 		require_once ('content-page.php');
 	break;
 
-	case 'get_form':
+	case 'getForm':
 		$page=$_POST['page'];
 		require_once ('form.php');
 	break;
 
-	case '_get_form_with_id':
+	case 'getFormWithId':
 		$ids=$_POST['ids'];
 		$page=$_POST['page'];
 		require_once ('form.php');

@@ -1,26 +1,35 @@
-$(document).ready(function() {
-  const images = ["./src/all-images/background-pix/bg1.jpg", "./src/all-images/background-pix/bg2.jpg", "./src/all-images/background-pix/bg3.jpg"];
-  $.backstretch(images, { duration: 4000, fade: 2000 });
-});
-
 function nextPage(nextId) {
-  $('.log-div').hide();
-  $('#'+nextId).fadeIn(1000);
-}
-
-function alertClose(){
-  $('.overlay-div').html('').fadeOut(200);
-}
-
-$(document).ready(function() {
-  function trim(s) {
-    return s.replace( /^\s*/, "" ).replace( /\s*$/, "" );
-    }
-$("#login-info").keydown(function(e){
-  if(e.keyCode==13){
-    logIn();
+    $('.log-div').hide();
+    $('#'+nextId).fadeIn(1000);
   }
-});
+
+  function alertClose(){
+    $('.overlay-div').html('').fadeOut(200);
+  }
+
+  function validateTextInput(input) {
+    input = input.trim();
+    return input === '' || /^[a-zA-Z\s]+$/.test(input);
+    }
+    
+    function validatePhoneNumber(input) {
+    input = input.trim();
+    return /^[\d\s()+-]+$/.test(input);
+    }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const listItems = document.querySelectorAll('nav ul li');
+  
+  listItems.forEach(item => {
+      item.addEventListener('click', () => {
+          // Remove active class from all list items
+          listItems.forEach(li => li.classList.remove('bg-[#D5DBDB]'));
+          
+          // Add active class to the clicked item
+          item.classList.add('bg-[#D5DBDB]');
+      });
+  });
 });
 
 function showAlert(iconType, errorType, message) {
@@ -47,28 +56,30 @@ function checkPassword(){
 }
 
 function resetPassword(){
-    const passEmail = $('#passEmail').val();
+    const emailAdress = $('#emailAdress').val();
 
-    if (passEmail==''){
-        showAlert('#warning-div', 'EMAIL ERROR', 'Fill all Fields To Continue');
+    if (emailAdress==''){
+        showAlert('#warning-div', 'EMAIL ERROR', 'All Fields are Required');
+
     }else{
+
         const btnText  = $('#submitButton').html();
 	    $('#submitButton').html('<i id="spinner" class="bi bi-arrow-repeat"></i> AUTHENTICATING...');
 	    document.getElementById('submitButton').disabled = true;
 
         const formData = new FormData();
-        formData.append('emailAddress', passEmail);
+        formData.append('emailAddress', emailAdress);
 
-        axios.post(`${endPoint}/admin/resetPassword`, formData, { headers })
+        axios.post(`${endPoint}/user/resetPassword`, formData, { headers })
         .then(response =>{
 
-            const {success, message, emailAddress, firstName, staffId} = response.data;
+            const {success, message, emailAddress, firstName, userId} = response.data;
 
             if (success){
                 showAlert('#success-div', 'SUCCESS', message);
                 $('#submitButton').html(btnText);
                 document.getElementById('submitButton').disabled = false;
-                getResetPassForm(emailAddress, firstName, staffId);
+                getResetPassForm(emailAddress, firstName, userId);
             }else{
                 showAlert('#warning-div', 'ERROR', message);
                 $('#submitButton').html(btnText);
@@ -86,17 +97,18 @@ function resetPassword(){
                 document.getElementById('submitButton').disabled = false;
             }
         });
+
     }
 }
 
-function getResetPassForm(emailAddress, firstName, staffId){
-    sessionStorage.setItem('staffId', staffId);
+function getResetPassForm(emailAddress, firstName, userId){
+    sessionStorage.setItem('userId', userId);
     const action='resetPassword';
     $('.overlay-div').html('<div class="ajax-loader"><br><img src="src/all-images/image-pix/ajax-loader.gif"/></div>').fadeIn(500);
     const formData = new FormData();
     formData.append('action', action);
-    formData.append('staffId', staffId);
-    axios.post(adminLocalUrl, formData)
+    formData.append('userId', userId);
+    axios.post(accountLocalUrl, formData)
     .then(response => {
         $('.overlay-div').html(response.data);
         $('#passFullname').html(firstName);
@@ -104,31 +116,7 @@ function getResetPassForm(emailAddress, firstName, staffId){
     });
 }
 
-function resendOTP(ids, staffId){
-    const btnText = $('#' + ids).html();
-    $('#' + ids).html('SENDING...');
-
-    const formData = new FormData();
-    formData.append('staffId', staffId);
-
-    axios.post(`${endPoint}/admin/resendOTP`, formData, { headers })
-    .then(response =>{
-       const message = response.data.message;
-       showAlert('#success-div', 'SUCCESS', message);
-       $('#' + ids).html(btnText);
-    })
-    .catch(error => {
-        if (error.response) {
-            showAlert('#warning-div', 'ERROR', error.response.data.message);
-            $('#' + ids).html(btnText);
-        }else{
-            showAlert('#warning-div', 'ERROR', error);
-            $('#' + ids).html(btnText);
-        }
-    });
-}
-
-function finishResetPassword(staffId){
+function finishResetPassword(userId){
     const resetPassOTP = $('#resetPassOTP').val();
     const createPassword = $('#createPassword').val();
     const confirmPassword = $('#confirmPassword').val();
@@ -153,9 +141,9 @@ function finishResetPassword(staffId){
             formData.append('otp', resetPassOTP);
             formData.append('password', createPassword);
             formData.append('password_confirmation', confirmPassword);
-            formData.append('staffId', staffId);
+            formData.append('userId', userId);
 
-            axios.post(`${endPoint}/admin/finishResetPassword`, formData, { headers })
+            axios.post(`${endPoint}/user/finishResetPassword`, formData, { headers })
             .then(response =>{
 
                 const {success, message} = response.data;
@@ -166,7 +154,7 @@ function finishResetPassword(staffId){
                     document.getElementById('submitButton').disabled = false;
                     alertClose();
                     passwordSuccessAlerts();
-                    // sessionStorage.removeItem('staffId', staffId);
+                    sessionStorage.removeItem('userId', userId);
                 }else{
                     showAlert('#warning-div', 'ERROR', message);
                     $('#submitButton').html(btnText);
@@ -195,7 +183,7 @@ function passwordSuccessAlerts() {
     const result = await Swal.fire({
       html: `
       <div class="flex flex-col items-center">
-        <img src="src/all-images/image-pix/success.gif" alt="Success" class="w-36 h-36"/>
+        <img src="all-images/image-pix/success.gif" alt="Success" class="w-36 h-36"/>
         <h2 class="text-black font-bold"><strong>Password Successfully Updated</strong></h2>
         <p>You can proceed to login with your new password.</p>
       </div>
@@ -216,6 +204,84 @@ function passwordSuccessAlerts() {
   showFixedAlert();
 }
 
+function getGender() {
+    axios.get(`${endPoint}/gender`, { headers })
+    .then(response => {
+        const { data } = response.data;
+        const options = data.map(({ id, genderName }) => 
+            `<option value="${id}">${genderName}</option>`
+        ).join('');
+        $('#genderId').html(options);
+    })
+    .catch(error => {
+        console.error('Error fetching gender:', error);
+    });
+}
+
+function newUser(){
+    const firstName = $('#firstName').val();
+    const middleName = $('#middleName').val();
+    const lastName = $('#lastName').val();
+    const phoneNo = $('#mobileNo').val();
+    const emailAddress = $('#emailAddress').val();
+    const genderId = $('#genderId').val();
+
+    if (firstName==''){
+        showAlert('#warning-div', 'FIRST NAME ERROR', 'All Fields are Required');
+    }else if (middleName==''){
+        showAlert('#warning-div', 'MIDDLE NAME ERROR', 'All Fields are Required');
+    }else if (lastName==''){
+        showAlert('#warning-div', 'LAST NAME ERROR', 'All Fields are Required');
+    }else if (phoneNo==''){
+        showAlert('#warning-div', 'PHONE NUMBER ERROR', 'All Fields are Required');
+    }else if (emailAddress==''){
+        showAlert('#warning-div', 'EMAIL ADDRESS ERROR', 'All Fields are Required');
+    }else if (genderId==''){
+        showAlert('#warning-div', 'GENDER ERROR', 'All Fields are Required');
+    }else{
+
+        const btnText  = $('#submitBtns').html();
+	    $('#submitBtns').html('<i id="spinner" class="bi bi-arrow-repeat"></i> SUBMITTING...');
+	    document.getElementById('submitBtns').disabled = true;
+
+        const formData = new FormData();
+        formData.append('firstName', firstName);
+        formData.append('middleName', middleName);
+        formData.append('lastName', lastName);
+        formData.append('mobileNumber', phoneNo);
+        formData.append('emailAddress', emailAddress);
+        formData.append('genderId', genderId);
+
+        axios.post(`${endPoint}/user/register`, formData, { headers })
+        .then(response =>{
+
+            const {success, message} = response.data;
+
+            if (success){
+                showAlert('#success-div', 'SUCCESS', message);
+                $('#submitBtns').html(btnText);
+                document.getElementById('submitBtns').disabled = false;
+                $('#firstName, #middleName, #lastName, #mobileNumber, #emailAddress').val('');
+            }else{
+                showAlert('#warning-div', 'ERROR', message);
+                $('#submitBtns').html(btnText);
+                document.getElementById('submitBtns').disabled = false;
+            }
+        })
+        .catch(error => {
+            if (error.response) {
+                showAlert('#warning-div', 'ERROR', error.response.data.message);
+                $('#submitBtns').html(btnText);
+                document.getElementById('submitBtns').disabled = false;
+            }else{
+                showAlert('#warning-div', 'ERROR', error);
+                $('#submitBtns').html(btnText);
+                document.getElementById('submitBtns').disabled = false;
+            }
+        });
+    }
+}
+
 function logIn(){
     const loginEmail = $('#loginEmail').val();
     const loginPass = $('#loginPass').val();
@@ -233,9 +299,8 @@ function logIn(){
         formData.append('emailAddress', loginEmail);
         formData.append('password', loginPass);
 
-        axios.post(`${endPoint}/admin/login`, formData, { headers })
+        axios.post(`${endPoint}/user/login`, formData, { headers })
         .then(response =>{
-
             const {success, message, token, data} = response.data;
 
             if (success){
@@ -243,8 +308,8 @@ function logIn(){
                 $('#submitBtn').html(btnText);
                 document.getElementById('submitBtn').disabled = false;
                 sessionStorage.setItem('accessToken', token);
-                sessionStorage.setItem('staffData', JSON.stringify(data));
-                window.location = portalUrl;
+                sessionStorage.setItem('userData', JSON.stringify(data));
+                window.location = userPortalUrl;
             }else{
                 showAlert('#warning-div', 'ERROR', message);
                 $('#submitBtn').html(btnText);
@@ -264,7 +329,3 @@ function logIn(){
         });
     }
 }
-
-
-
-

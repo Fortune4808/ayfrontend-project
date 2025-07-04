@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: body-font;
+    src: url(SEGOEUI.TTF);
+}
+  @font-face {
+    font-family:title-font;
+    src: url(berlin-regular.TTF);
+}
+  
+:root {
+    --primary-color: #002B00;
+    --secondary-color: #031C13;
+}
+
+input{
+    @apply w-[100%] my-[10px] py-[15px] px-[20px] bg-white focus:outline-none border-primary-color border-[1px] rounded-[5px];
+}
+
+button{
+    @apply w-[40%] bg-primary-color hover:bg-[#444444] text-white py-[15px] rounded-[5px];
+}
+

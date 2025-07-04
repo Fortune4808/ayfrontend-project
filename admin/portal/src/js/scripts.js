@@ -152,7 +152,7 @@ function allStaff(){
                     </table>
                     <div class="my-[10px] flex justify-between">
                         <div class="text-[#3a4669]">
-                            Showing ${pagination.from} to ${pagination.to} of ${pagination.perPage} entries
+                            Showing ${pagination.from} to ${pagination.to} of ${pagination.total} entries
                         </div>
 
                         <div class="flex gap-1 mb-4">
@@ -365,7 +365,7 @@ function allCustomers(){
                     </table>
                     <div class="my-[10px] flex justify-between">
                         <div class="text-[#3a4669]">
-                            Showing ${pagination.from} to ${pagination.to} of ${pagination.perPage} entries
+                            Showing ${pagination.from} to ${pagination.to} of ${pagination.total} entries
                         </div>
 
                         <div class="flex gap-1 mb-4">
@@ -473,7 +473,7 @@ function allLocation(){
                     </table>
                     <div class="my-[10px] flex justify-between">
                         <div class="text-[#3a4669]">
-                            Showing ${pagination.from} to ${pagination.to} of ${pagination.perPage} entries
+                            Showing ${pagination.from} to ${pagination.to} of ${pagination.total} entries
                         </div>
 
                         <div class="flex gap-1 mb-4">
@@ -599,6 +599,152 @@ function newLocation(){
         });
     }
 }
+
+function allSlot(){
+    const container = $('#fetchAllSlot');
+    container.html(`<div class="ajax-loader"><br><img src="src/all-images/image-pix/ajax-loader.gif"/></div>`).fadeIn(500);
+
+    axios.get(`${endPoint}/admin/slot`, { headers })
+    .then(response => {
+        const {success, message, data: fetch, pagination } = response.data;  
+        if (success) {
+            if (fetch.length > 0) {
+                const tableRows = fetch.map((item, index) => {
+                    const id = item.id;
+                    const slotName = `${item.slotName.toUpperCase()}`;
+                    const locationName = `${item.location.locationName.toUpperCase()}`;
+                    const createdBy = item.createdBy;
+                    const createdAt = item.created_at;
+
+                    return `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${slotName}</td>
+                            <td>${locationName}</td>
+                            <td>${createdBy}</td>
+                            <td>${createdAt}</td>
+                            <td>
+                                <i onclick="getFormWithId('slotProfile','${id}')" class="bi bi-pencil-square text-[15px] text-white p-[8px] bg-primary-color cursor-pointer hover:bg-[#444444]" title="VIEW LOCATION"></i>
+                                <i onclick="deleteLocation(${id});" class="bi bi-trash-fill text-[15px] text-white p-[8px] bg-primary-color cursor-pointer hover:bg-[#2b0e0e]" title="DELETE LOCATION"></i>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                const table = `
+                    <table>
+                        <thead><tr><th>SN</th><th>SLOT NAME</th><th>LOCATION NAME</th><th>CREATED BY</th><th>DATE</th><th>ACTION</th></tr></thead>
+                        <tbody class="bg-white">${tableRows}</tbody>
+                    </table>
+                    <div class="my-[10px] flex justify-between">
+                        <div class="text-[#3a4669]">
+                            Showing ${pagination.from} to ${pagination.to} of ${pagination.total} entries
+                        </div>
+
+                        <div class="flex gap-1 mb-4">
+                            <button class="text-sm py-[8px] px-[15px]" ${pagination.prevPageUrl ? `onclick="(${pagination.prevPageUrl})"` : 'disabled'}>PREVIOUS</button>
+                            <button class="text-sm py-[8px] px-[15px]" ${pagination.nextPageUrl ? `onclick="(${pagination.nextPageUrl})"` : 'disabled'}>NEXT</button>
+                        </div>
+                    </div>
+                `;
+                container.html(table);
+            }
+        } else {
+            container.html(`
+                <table>
+                    <thead><tr><th>SN</th><th>SLOT NAME</th><th>LOCATION NAME</th><th>CREATED BY</th><th>DATE</th><th>ACTION</th></tr></thead>
+                    <tbody class="bg-white"></tbody>
+                </table>
+                ${noRecordFound(message)}
+            `);
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching slot:', error);
+        container.html('<p>There was an error fetching the slot. Please try again later.</p>');
+    });
+}
+
+function getSlot(slotId){
+    axios.get(`${endPoint}/admin/slot/${slotId}`, { headers })
+    .then(response => {
+        const {data: slotData } = response.data;
+
+        $('#slotName').val(slotData.slotName);
+
+        $("#locationId").append('<option value="' + slotData.location.locationId + '" selected="selected">' + slotData.location.locationName +"</option>");
+    })
+    .catch(error => {
+        console.error('Error fetching slot:', error);
+        container.html('<p>There was an error fetching the slot. Please try again later.</p>');
+    });
+}
+
+function newSlot(){
+    const locationId = $('#locationId').val();
+    const slotName = $('#slotName').val();
+    const statusId = $('#statusId').val();
+
+    if (locationId==''){
+        showAlert('#warning-div', 'LOCATION NAME ERROR', 'All Fields are Required');
+    }else if (slotName==''){
+        showAlert('#warning-div', 'SLOT NAME ERROR', 'All Fields are Required');
+    }else{
+
+        const btnText  = $('#submitBtn').html();
+	    $('#submitBtn').html('<i id="spinner" class="bi bi-arrow-repeat"></i> SUBMITTING...');
+	    document.getElementById('submitBtn').disabled = true;
+
+        const formData = new FormData();
+        formData.append('locationId', locationId);
+        formData.append('slotName', slotName);
+        formData.append('statusId', statusId);
+
+        axios.post(`${endPoint}/admin/slot`, formData, { headers })
+        .then(response =>{
+
+            const {success, message} = response.data;
+
+            if (success){
+                showAlert('#success-div', 'SUCCESS', message);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+                allSlot(); alertClose();
+            }else{
+                showAlert('#warning-div', 'ERROR', message);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+            }
+        })
+        .catch(error => {
+            if (error.response) {
+                showAlert('#warning-div', 'ERROR', error.response.data.message);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+            }else{
+                showAlert('#warning-div', 'ERROR', error);
+                $('#submitBtn').html(btnText);
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+    }
+}
+
+function getLocation() {
+    axios.get(`${endPoint}/admin/location`, { headers })
+    .then(response => {
+        const { data } = response.data;
+        const options = data.map(({ id, locationName }) => 
+            `<option value="${id}">${locationName}</option>`
+        ).join('');
+        $('#locationId').html(options);
+    })
+    .catch(error => {
+        console.error('Error fetching location:', error);
+    });
+}
+
+
 
 
 
