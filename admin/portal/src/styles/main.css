@@ -41,10 +41,6 @@
   @apply w-[30%] h-[200px] bg-primary-color rounded-md flex-grow flex justify-center items-center;
 }
 
-.formHeader{
-  @apply bg-portal-bg h-[55px] flex justify-between items-center px-[10px];
-}
-
 .formInput{
   @apply w-[100%] my-[8px] py-[15px] px-[20px] bg-white outline-none focus:border-primary-color focus:border-[1px] border-[1px] rounded-[5px];
 }

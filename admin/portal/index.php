@@ -24,6 +24,7 @@
 				</div>
 			</div>
 			<script>getStaffLogin();</script>
+			<script>sessionValidation();</script>
 		</div>
 
 		<div class="w-[29%] h-[90px] bg-white/80 rounded-md text-[#424141] pl-5 flex flex-col justify-center text-sm" data-aos="zoom-in" data-aos-duration="2000">

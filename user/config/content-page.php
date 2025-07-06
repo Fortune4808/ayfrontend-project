@@ -6,7 +6,7 @@
         <div class="mt-[20px] font-bold text-[12px] flex flex-col gap-[18px]">
             <div class="w-[100%]">
                 <label class="px-[10px] text-secondary-color"><i class="bi-envelope-fill text-[#A4A6C5]"></i> EMAIL ADDRESS:</label><br/>
-                <input class="w-[100%] my-[10px] py-[15px] px-[20px] bg-white outline-none border-primary-color border-[1px] rounded-[5px]" type="text" id="loginEmail" placeholder="ENTER YOUR MATRIC NUMBER"/>
+                <input class="w-[100%] my-[10px] py-[15px] px-[20px] bg-white outline-none border-primary-color border-[1px] rounded-[5px]" type="text" id="loginEmail" placeholder="ENTER YOUR EMAIL ADDRESS"/>
             </div>
             
             <div class="w-[100%]">

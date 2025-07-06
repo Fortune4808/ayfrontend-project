@@ -127,6 +127,7 @@ function allStaff(){
                     const emailAddress = item.emailAddress;
                     const mobileNumber = item.mobileNumber;
                     const statusName = item.status.statusName;
+                    const statusId = item.status.statusId;
                     const roleName = item.role.roleName;
                     const passportUrl = item.passportUrl;
 
@@ -139,7 +140,13 @@ function allStaff(){
                             <td>${emailAddress}</td>
                             <td>${mobileNumber}</td>
                             <td>${roleName}</td>
-                            <td>${statusName}</td>
+                            <td>
+                                <span class="${statusId == 1 
+                                    ? 'bg-emerald-500 text-white px-2 py-1 rounded font-semibold' 
+                                    : 'bg-red-100 text-red-700 px-2 py-1 rounded italic'}">
+                                    ${statusName}
+                                </span>
+                            </td>
                             <td><i onclick="getFormWithId('staffProfileModule','${staffId}')" class="bi bi-pencil-square text-[15px] text-white p-[8px] bg-primary-color cursor-pointer hover:bg-[#444444]" title="VIEW PROFILE"></i></td>
                         </tr>
                     `;
@@ -342,6 +349,7 @@ function allCustomers(){
                     const emailAddress = item.emailAddress;
                     const mobileNumber = item.mobileNumber;
                     const statusName = item.status.statusName;
+                    const statusId = item.status.statusId;
                     const passportUrl = item.passportUrl;
 
                     return `
@@ -352,7 +360,13 @@ function allCustomers(){
                             <td>${fullName}</td>
                             <td>${emailAddress}</td>
                             <td>${mobileNumber}</td>
-                            <td>${statusName}</td>
+                            <td>
+                                <span class="${statusId == 1 
+                                    ? 'bg-emerald-500 text-white px-2 py-1 rounded font-semibold' 
+                                    : 'bg-red-100 text-red-700 px-2 py-1 rounded italic'}">
+                                    ${statusName}
+                                </span>
+                            </td>
                             <td><i onclick="getFormWithId('studentProfileModule','${userId}')" class="bi bi-pencil-square text-[15px] text-white p-[8px] bg-primary-color cursor-pointer hover:bg-[#444444]" title="VIEW PROFILE"></i></td>
                         </tr>
                     `;
@@ -614,6 +628,8 @@ function allSlot(){
                     const slotName = `${item.slotName.toUpperCase()}`;
                     const locationName = `${item.location.locationName.toUpperCase()}`;
                     const createdBy = item.createdBy;
+                    const statusName = item.status.statusName;
+                    const statusId = item.status.statusId;
                     const createdAt = item.created_at;
 
                     return `
@@ -624,6 +640,13 @@ function allSlot(){
                             <td>${createdBy}</td>
                             <td>${createdAt}</td>
                             <td>
+                                <span class="${statusId == 1 
+                                    ? 'bg-emerald-500 text-white px-2 py-1 rounded font-semibold' 
+                                    : 'bg-red-100 text-red-700 px-2 py-1 rounded italic'}">
+                                    ${statusName}
+                                </span>
+                            </td>
+                            <td>
                                 <i onclick="getFormWithId('slotProfile','${id}')" class="bi bi-pencil-square text-[15px] text-white p-[8px] bg-primary-color cursor-pointer hover:bg-[#444444]" title="VIEW LOCATION"></i>
                                 <i onclick="deleteLocation(${id});" class="bi bi-trash-fill text-[15px] text-white p-[8px] bg-primary-color cursor-pointer hover:bg-[#2b0e0e]" title="DELETE LOCATION"></i>
                             </td>
@@ -633,7 +656,7 @@ function allSlot(){
 
                 const table = `
                     <table>
-                        <thead><tr><th>SN</th><th>SLOT NAME</th><th>LOCATION NAME</th><th>CREATED BY</th><th>DATE</th><th>ACTION</th></tr></thead>
+                        <thead><tr><th>SN</th><th>SLOT NAME</th><th>LOCATION NAME</th><th>CREATED BY</th><th>DATE</th><th>STATUS</th><th>ACTION</th></tr></thead>
                         <tbody class="bg-white">${tableRows}</tbody>
                     </table>
                     <div class="my-[10px] flex justify-between">
@@ -652,7 +675,7 @@ function allSlot(){
         } else {
             container.html(`
                 <table>
-                    <thead><tr><th>SN</th><th>SLOT NAME</th><th>LOCATION NAME</th><th>CREATED BY</th><th>DATE</th><th>ACTION</th></tr></thead>
+                    <thead><tr><th>SN</th><th>SLOT NAME</th><th>LOCATION NAME</th><th>CREATED BY</th><th>DATE</th><th>STATUS</th><th>ACTION</th></tr></thead>
                     <tbody class="bg-white"></tbody>
                 </table>
                 ${noRecordFound(message)}

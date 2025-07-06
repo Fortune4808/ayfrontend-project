@@ -7,6 +7,14 @@
     --secondary-color: #031C13;
 }
 
+button{
+    @apply bg-primary-color hover:bg-[#444444] text-white py-[15px] rounded-[5px];
+}
+
+.formInput{
+  @apply w-[100%] my-[8px] py-[15px] px-[20px] bg-white outline-none focus:border-primary-color focus:border-[1px] border-[1px] rounded-[5px];
+}
+
 .side-links{
     @apply pt-[12px] px-[10px] pb-[18px] border-b-[#DBEBBE] border-b-[1px] text-[13px] cursor-pointer;
 }

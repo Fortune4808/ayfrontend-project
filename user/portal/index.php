@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <div class="overlay-div"></div>
     <?php include "src/header.php" ?>
     <div class="absolute w-[calc(100%-230px)] h-[calc(100%-70px)] right-0 top-[70px] flex justify-center h-custom-screen-mm:w-full">
         <div class="w-[96%] mt-[15px] flex flex-wrap justify-between">
@@ -21,6 +22,7 @@
             </div>
         </div>
         <script>getUser();</script>
+        <script>sessionValidation();</script>
     </div>
 
 </body>

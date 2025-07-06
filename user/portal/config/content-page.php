@@ -32,3 +32,13 @@
     </div>
 <?php }?>
 
+<?php if($page=='slot'){?>
+   <div class="w-[95%] m-auto mt-5">
+        <h2 class="font-bold">All Slot</h2>
+
+        <div class="mt-[10px]" id="fetchAllSlot">
+            <script>allSlot(1);</script>
+        </div>
+    </div>
+<?php }?>
+

@@ -16,6 +16,7 @@
             <li class="side-links" onclick="expandLink('settings');"  title="System Settings">  <i class="bi-gear text-[#3a4669] mr-[6px]"></i> System Settings  <i class="bi bi-chevron-down float-right mr-[15px]"></i>
                 <div class="w-[100%] bg-[#f4f6fa]" id="settings-li" style="display:none">   
                     <div class="li-in" onClick="getForm('passForm');"> - Change Your Password</div>
+                    <div class="li-in" onClick="getForm('systemSettings');"> - System Settings</div>
                 </div>
             </li>
 

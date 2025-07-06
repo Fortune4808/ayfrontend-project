@@ -1,17 +1,12 @@
-function _session_validation() {
-    const access_key = sessionStorage.getItem('access_key');
-    
-    if (!access_key) {
-      
+function sessionValidation() {
+    if (!accessToken) {
       sessionStorage.clear();
-      window.location.href = website_url + '/admin'; 
-      
+      window.location.href = websiteUrl + '/admin';
     } 
-  }
+}
 
-
-  function _logout_(){
+function logOut(){
     sessionStorage.clear();
-    window.location.href = website_url + '/admin'; 
-  }
+    window.location.href = websiteUrl + '/admin';
+}
   

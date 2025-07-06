@@ -12,10 +12,10 @@
     
     <ul>
         <li class="side-links" onclick="getPage('dashboard')"><i class="bi-speedometer2 mr-[6px]"></i> Dashboard</li>
-        <li class="side-links" onclick="expandLink('fees');" title="Fees" id=""><i class="bi-book mr-[6px]"></i> Fees<i class="bi bi-chevron-down float-right mr-[15px]"></i>
-            <div class="w-[100%] bg-white/50" id="fees-li" style="display:none">   
-                <div class="li-in" onclick="getPage('payment-history');"> - Payment History</div>
-                <div class="li-in" onclick="getPage('payment-advice');"> - Payment Advise</div>
+        <li class="side-links" onclick="expandLink('fees');" title="Fees" id=""><i class="bi-book mr-[6px]"></i> Slot<i class="bi bi-chevron-down float-right mr-[15px]"></i>
+            <div class="w-[100%] bg-white/50" id="fees-li" style="display:none">
+                <div class="li-in" onclick="getPage('slot');"> - Book Slot</div> 
+                <div class="li-in" onclick="getPage('transactionHistory');"> - Transaction History</div>
             </div>
         </li>
         <li class="side-links" onclick="logOut();"><i class="bi-power mr-[6px]"></i> Log-Out</li>
